@@ -1,0 +1,10 @@
+I wrote all the program4 (p2.c)code myself, although for the multiple piping portion of the program, I based my general design off of the following stackoverflow link:
+
+https://stackoverflow.com/questions/8389033/implementation-of-multiple-pipes-in-c
+
+The implementation on that site page however, is HORIZONTAL because the parent process is actually calling fork() for each child command, rather than having the previously fork'ed child call fork() for any new commands. My p2 achieves vertical pipelining by having each child process call fork() in the execPipes method.
+
+The splint error should be ignored, as on the man pages for killpg(2) it says the only header 
+file that is needed is signal.h, which is included in my p2.h.
+
+The input delimiter portion of this project ('<<') simply ignores any tokens that are '<<', however it does identify them. No special actions are taken when one is read into newargv. Every other part of this project should work as specified in the instructions for p4. The user look up information should be working properly as well, assuming that there exists a file named "/etc/passwd" somwehere in memory that p2 can read from.

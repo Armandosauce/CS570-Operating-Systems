@@ -1,0 +1,41 @@
+jogger:
+=======
+    CHK(sem_wait(&allow_jog));
+    CHK(sem_wait(&jog_sem));
+
+    jogc++;
+    if(jogc == 1) {
+      CHK(sem_wait(&allow_shoot));
+    }
+      CHK(sem_post(&jog_sem));
+      CHK(sem_post(&allow_jog));
+
+    CHK(sem_wait(&jog_sem));
+    jogc--;
+
+    if(jogc == 0) {
+      CHK(sem_post(&allow_shoot));
+    }
+
+    CHK(sem_post(&jog_sem));
+
+shooter:
+========
+    CHK(sem_wait(&allow_shoot));
+    CHK(sem_wait(&shoot_sem));
+
+    shootc++;
+    if(shootc == 1) {
+      CHK(sem_wait(&allow_jog));
+    }
+      CHK(sem_post(&shoot_sem));
+      CHK(sem_post(&allow_shoot));
+
+    CHK(sem_wait(&shoot_sem));
+    shootc--;
+
+    if(shootc == 0) {
+      CHK(sem_post(&allow_jog));
+    }
+
+    CHK(sem_post(&shoot_sem));
